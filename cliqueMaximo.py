@@ -12,30 +12,14 @@ elementosClique = []
 def inicio():
     global Grafo
     #arq = open('C:/Users/Barbara/PycharmProjects/TP_Final_PAA/facebook/1684.edges', 'rb')
-    arq = open('C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/1912.edges', 'rb')
+    arq = open('C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/3980.edges', 'rb')
 
-    print("Arquivo")
-    print(arq)
-    #Leitura do arquivo
     G = nx.read_edgelist(arq)
 
     #para cada vértice, vou adicionar a aresta com vértice 0 - orientacao da base
     vertices = [x for x in nx.nodes(G)]
     for n in vertices:
-        G.add_edge('1912', n)
-
-    print("Vertice")
-    print(nx.number_of_nodes(G))
-
-    print("Arestas")
-    print(nx.number_of_edges(G))
-
-    print("Densidade")
-    print("%.4f" % nx.density(G))
-
-    print((nx.is_connected(G)))
-
-    #print(psutil.virtual_memory())
+        G.add_edge('3980', n)
 
     #Congela Grafo
     nx.freeze(G)
@@ -45,8 +29,8 @@ def inicio():
     #Lista de tuplas(vertice, grau)
     grafosList = list(G.degree)
 
-    #ordenação crescente pelo grau
-    grafosList.sort(key=lambda tup: tup[1])
+    #ordenacao DESCRESCENTE pelo grau
+    grafosList.sort(key=lambda tup: tup[1], reverse=True)
 
     return grafosList
 
