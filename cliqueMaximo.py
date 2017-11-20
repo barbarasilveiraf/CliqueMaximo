@@ -1,6 +1,7 @@
 import networkx as nx
 import time
 from datetime import datetime
+import sys
 #from guppy import hpy
 
 from networkx.algorithms.clique import find_cliques
@@ -12,8 +13,9 @@ elementosClique = []
 def inicio():
     global Grafo
     #arq = open('C:/Users/Barbara/PycharmProjects/TP_Final_PAA/facebook/1684.edges', 'rb')
+    #arq = open(str(sys.argv[0]), 'rb')
     arq = open('C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/3980.edges', 'rb')
-
+    #print("sys.argv[0] " + sys.argv[0])
     G = nx.read_edgelist(arq)
 
     #para cada vértice, vou adicionar a aresta com vértice 0 - orientacao da base
