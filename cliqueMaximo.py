@@ -1,6 +1,7 @@
 import networkx as nx
 import time
 from datetime import datetime
+from math import sqrt
 import sys
 #from guppy import hpy
 
@@ -9,9 +10,21 @@ from networkx.algorithms.clique import find_cliques
 Grafo = nx.Graph
 max = 0
 elementosClique = []
+mediaGrauVertices = 0
+desvioPadrao = 0
+
+def desvio_padrao(m):
+    diffMedia = 0
+    vertices = [x for x in nx.nodes(Grafo)]
+    for n in vertices:
+        diffMedia += pow((Grafo.degree[n] - m),2)
+    diffMedia /= len(vertices)
+    return sqrt(diffMedia)
 
 def inicio():
     global Grafo
+    global mediaGrauVertices
+    global desvioPadrao
     #arq = open('C:/Users/Barbara/PycharmProjects/TP_Final_PAA/facebook/1684.edges', 'rb')
     #arq = open(str(sys.argv[0]), 'rb')
     arq = open('C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/3980.edges', 'rb')
@@ -23,16 +36,46 @@ def inicio():
     for n in vertices:
         G.add_edge('3980', n)
 
-    #Congela Grafo
-    nx.freeze(G)
-
     Grafo = G
+
+    for n in vertices:
+        mediaGrauVertices += G.degree[n]
+    mediaGrauVertices /= nx.number_of_nodes(G)
+
+    desvioPadrao = desvio_padrao(mediaGrauVertices)
+
+    print("DESVIO PADRAO ")
+    print(desvioPadrao)
+
+    #print(mediaGrauVertices)
+    #Congela Grafo
+    #nx.freeze(G)
+
+
 
     #Lista de tuplas(vertice, grau)
     grafosList = list(G.degree)
 
-    #ordenacao DESCRESCENTE pelo grau
-    grafosList.sort(key=lambda tup: tup[1], reverse=True)
+    #ordenacao crescente pelo grau
+    grafosList.sort(key=lambda tup: tup[1])
+
+    #print("Vertice ANTES")
+    #print(len(grafosList))
+
+    a = [x[1] for x in grafosList]
+    print(a)
+
+    for n in vertices:
+       if(G.degree[n] < mediaGrauVertices):
+            v = [x for x, y in enumerate(grafosList) if y[0] == n]
+            grafosList.pop(v[0])
+            Grafo.remove_node(n)
+
+    #print((nx.is_connected(G)))
+
+    #print(grafosList)
+    #print("Vertice DEPOIS")
+    #print(len(grafosList))
 
     return grafosList
 
