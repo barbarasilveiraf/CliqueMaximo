@@ -64,8 +64,6 @@ clique(lista, 0, [])
 print('CLIQUE MAX - ' + str(max))
 #print('Elementos MAX - ' + str(elementosClique))
 #cliques = list(find_cliques(Grafo))
-#l = [len(x) for x in cliques]
-#print('Outro: ' + str(sorted(l)[-1:]))
 tempoFim = time.time()
 print("TEMPO -> " + "%.4f" % (tempoFim - tempoInicio))
 
