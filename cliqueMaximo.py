@@ -11,18 +11,24 @@ elementosClique = []
 
 def inicio():
     global Grafo
+    nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/348.edges'
     #arq = open('C:/Users/Barbara/PycharmProjects/TP_Final_PAA/facebook/1684.edges', 'rb')
-    arq = open('C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/1912.edges', 'rb')
+    arq = open(nomeCaminhoArq, 'rb')
 
     print("Arquivo")
     print(arq)
+
     #Leitura do arquivo
     G = nx.read_edgelist(arq)
 
     #para cada vértice, vou adicionar a aresta com vértice 0 - orientacao da base
+
+    end = None
+    nomeArq = nomeCaminhoArq[84:end].replace(".edges","")
+
     vertices = [x for x in nx.nodes(G)]
     for n in vertices:
-        G.add_edge('1912', n)
+        G.add_edge(nomeArq, n)
 
     print("Vertice")
     print(nx.number_of_nodes(G))
