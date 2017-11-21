@@ -13,45 +13,36 @@ elementosClique = []
 mediaGrauVertices = 0
 desvioPadrao = 0
 
-def desvio_padrao(m):
+def desvio_padrao(m, g):
     diffMedia = 0
-    vertices = [x for x in nx.nodes(Grafo)]
-    for n in vertices:
+    vertices = [x[0] for x in g]
+    for n in vertices[:-1]:
         diffMedia += pow((Grafo.degree[n] - m),2)
-    diffMedia /= len(vertices)
+    diffMedia /= (len(vertices)-1)
     return sqrt(diffMedia)
 
 def inicio():
     global Grafo
     global mediaGrauVertices
     global desvioPadrao
-    #arq = open('C:/Users/Barbara/PycharmProjects/TP_Final_PAA/facebook/1684.edges', 'rb')
     #arq = open(str(sys.argv[0]), 'rb')
-    arq = open('C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/3980.edges', 'rb')
-    #print("sys.argv[0] " + sys.argv[0])
+    nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/107.edges'
+    arq = open(nomeCaminhoArq, 'rb')
+
     G = nx.read_edgelist(arq)
 
-    #para cada vértice, vou adicionar a aresta com vértice 0 - orientacao da base
+    #para cada vertice, vou adicionar a aresta com vértice 0 - orientacao da base
+    end = None
+    nomeArq = nomeCaminhoArq[84:end].replace(".edges","")
+
     vertices = [x for x in nx.nodes(G)]
     for n in vertices:
-        G.add_edge('3980', n)
+        G.add_edge(nomeArq, n)
 
     Grafo = G
 
-    for n in vertices:
-        mediaGrauVertices += G.degree[n]
-    mediaGrauVertices /= nx.number_of_nodes(G)
-
-    desvioPadrao = desvio_padrao(mediaGrauVertices)
-
-    print("DESVIO PADRAO ")
-    print(desvioPadrao)
-
-    #print(mediaGrauVertices)
     #Congela Grafo
     #nx.freeze(G)
-
-
 
     #Lista de tuplas(vertice, grau)
     grafosList = list(G.degree)
@@ -59,23 +50,22 @@ def inicio():
     #ordenacao crescente pelo grau
     grafosList.sort(key=lambda tup: tup[1])
 
-    #print("Vertice ANTES")
-    #print(len(grafosList))
+    #pra pegar os vertices ja ordenados pelo grau
+    vertices = [x[0] for x in grafosList]
 
-    a = [x[1] for x in grafosList]
-    print(a)
+    for n in vertices[:-1]: #pra ignorar o valor mais alto...
+        mediaGrauVertices += G.degree[n]
+    mediaGrauVertices /= (nx.number_of_nodes(G)-1)
 
+    #calcular o desvio padrao
+    desvioPadrao = desvio_padrao(mediaGrauVertices, grafosList)
+
+    #remove os elementos cujo grau menor que a media
     for n in vertices:
        if(G.degree[n] < mediaGrauVertices):
             v = [x for x, y in enumerate(grafosList) if y[0] == n]
             grafosList.pop(v[0])
             Grafo.remove_node(n)
-
-    #print((nx.is_connected(G)))
-
-    #print(grafosList)
-    #print("Vertice DEPOIS")
-    #print(len(grafosList))
 
     return grafosList
 
@@ -97,8 +87,6 @@ def clique(S, tamanho, cliquesTemp):
         cliquesTemp.append(i);
         clique(list(set(S).intersection(set(list(Grafo.neighbors(i))))), tamanho+1, cliquesTemp)
 
-
-
 #h = hpy()
 #h.setrelheap()
 
@@ -115,7 +103,3 @@ print("TEMPO -> " + "%.4f" % (tempoFim - tempoInicio))
 #x = h.heap() #depois do coigo
 #print('memoria: '+str(x.size))
 #print ('memoria'+ str(x))
-
-#print(psutil.virtual_memory())
-#print(psutil.swap_memory())
-
