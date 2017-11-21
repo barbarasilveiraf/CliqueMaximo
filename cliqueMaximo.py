@@ -26,7 +26,7 @@ def inicio():
     global mediaGrauVertices
     global desvioPadrao
     #arq = open(str(sys.argv[0]), 'rb')
-    nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/1684.edges'
+    nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/348.edges'
     arq = open(nomeCaminhoArq, 'rb')
 
     G = nx.read_edgelist(arq)
@@ -41,8 +41,6 @@ def inicio():
 
     Grafo = G
 
-    print("Vertices incicio")
-    print(nx.number_of_nodes(Grafo))
     #Congela Grafo
     #nx.freeze(G)
 
@@ -63,14 +61,12 @@ def inicio():
     desvioPadrao = desvio_padrao(mediaGrauVertices, grafosList)
 
     #remove os elementos cujo grau menor que a media
-    for n in vertices:
-       if(G.degree[n] < mediaGrauVertices - desvioPadrao):
-            v = [x for x, y in enumerate(grafosList) if y[0] == n]
-            grafosList.pop(v[0])
-            Grafo.remove_node(n)
+    #for n in vertices:
+    #  if(G.degree[n] < mediaGrauVertices - desvioPadrao):
+    #        v = [x for x, y in enumerate(grafosList) if y[0] == n]
+    #        grafosList.pop(v[0])
+    #        Grafo.remove_node(n)
 
-    print("Vertices depois")
-    print(nx.number_of_nodes(Grafo))
 
     return grafosList
 
@@ -90,7 +86,12 @@ def clique(S, tamanho, cliquesTemp):
         i = S[0]
         S.remove(i)
         cliquesTemp.append(i)
-        clique(list(set(S).intersection(set(list(Grafo.neighbors(i))))), tamanho+1, cliquesTemp)
+        #if(Grafo.degree(i) < mediaGrauVertices):   return #nao funcionou... :(
+
+        if (Grafo.degree(i) >= mediaGrauVertices):
+             #pra ignorar os viznhos cujo grau e menor q a media
+            vizinhosVertices = [x for x in Grafo.neighbors(i) if Grafo.degree[x] >= mediaGrauVertices]
+            clique(list(set(S).intersection(set(list(vizinhosVertices)))), tamanho+1, cliquesTemp)
 
 #h = hpy()
 #h.setrelheap()
