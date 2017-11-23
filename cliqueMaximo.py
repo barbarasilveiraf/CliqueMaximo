@@ -1,7 +1,7 @@
 import networkx as nx
 import time
 from datetime import datetime
-#from guppy import hpy
+from guppy import hpy
 
 from networkx.algorithms.clique import find_cliques
 
@@ -12,9 +12,11 @@ elementosClique = []
 def inicio():
     global Grafo
     end = None
-    nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/348.edges'
+    #nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/348.edges'
     #arq = open('C:/Users/Barbara/PycharmProjects/TP_Final_PAA/facebook/1684.edges', 'rb')
-    arq = open(nomeCaminhoArq, 'rb')
+    arq = open(str(sys.argv[1]), 'rb')
+
+    nomeCaminhoArq = str(sys.argv[1])
 
     print("1 Arquivo")
     print(nomeCaminhoArq[84:end])
@@ -87,10 +89,8 @@ def clique(S, tamanho, cliquesTemp):
         cliquesTemp.append(i);
         clique(list(set(S).intersection(set(list(Grafo.neighbors(i))))), tamanho+1, cliquesTemp)
 
-
-
-#h = hpy()
-#h.setrelheap()
+h = hpy()
+h.setrelheap()
 
 #print("HORA ATUAL " + str(datetime.now().hour )+ ":" + str(datetime.now().minute) +":" + str(datetime.now().second))
 tempoInicio = time.time()
@@ -106,13 +106,11 @@ tempoFim = time.time()
 print("10 Tempo")
 print("%.4f" % (tempoFim - tempoInicio))
 
+x = h.heap() #depois do coigo
+print('memoria: '+str(x.size))
+
 print("11 Memoria")
-print("---")
+print(str(x.size))
 
-#x = h.heap() #depois do coigo
-#print('memoria: '+str(x.size))
 #print ('memoria'+ str(x))
-
-#print(psutil.virtual_memory())
-#print(psutil.swap_memory())
 
