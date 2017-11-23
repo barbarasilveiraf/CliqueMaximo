@@ -11,35 +11,48 @@ elementosClique = []
 
 def inicio():
     global Grafo
+    end = None
     nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/348.edges'
     #arq = open('C:/Users/Barbara/PycharmProjects/TP_Final_PAA/facebook/1684.edges', 'rb')
     arq = open(nomeCaminhoArq, 'rb')
 
-    print("Arquivo")
-    print(arq)
+    print("1 Arquivo")
+    print(nomeCaminhoArq[84:end])
 
     #Leitura do arquivo
     G = nx.read_edgelist(arq)
 
     #para cada vértice, vou adicionar a aresta com vértice 0 - orientacao da base
 
-    end = None
+
     nomeArq = nomeCaminhoArq[84:end].replace(".edges","")
 
     vertices = [x for x in nx.nodes(G)]
     for n in vertices:
         G.add_edge(nomeArq, n)
 
-    print("Vertice")
+    print("2 Vertice Orign")
     print(nx.number_of_nodes(G))
 
-    print("Arestas")
+    print("3 Arestas Orign")
     print(nx.number_of_edges(G))
 
-    print("Densidade")
+    print("4 media")
+    print("0.00")
+
+    print("5 Densidade")
     print("%.4f" % nx.density(G))
 
-    print((nx.is_connected(G)))
+    print("6 Vertice Utiliz")
+    print(nx.number_of_nodes(G))
+
+    print("7 Arestas Orign")
+    print(nx.number_of_edges(G))
+
+    print("8 Desvio Padrao")
+    print("0.00")
+
+   #print((nx.is_connected(G)))
 
     #print(psutil.virtual_memory())
 
@@ -79,17 +92,22 @@ def clique(S, tamanho, cliquesTemp):
 #h = hpy()
 #h.setrelheap()
 
-print("HORA ATUAL " + str(datetime.now().hour )+ ":" + str(datetime.now().minute) +":" + str(datetime.now().second))
+#print("HORA ATUAL " + str(datetime.now().hour )+ ":" + str(datetime.now().minute) +":" + str(datetime.now().second))
 tempoInicio = time.time()
 lista = [x[0] for x in inicio()]
 clique(lista, 0, [])
-print('CLIQUE MAX - ' + str(max))
+print('9 CLIQUE MAX ')
+print(str(max))
 #print('Elementos MAX - ' + str(elementosClique))
 #cliques = list(find_cliques(Grafo))
 #l = [len(x) for x in cliques]
 #print('Outro: ' + str(sorted(l)[-1:]))
 tempoFim = time.time()
-print("TEMPO -> " + "%.4f" % (tempoFim - tempoInicio))
+print("10 Tempo")
+print("%.4f" % (tempoFim - tempoInicio))
+
+print("11 Memoria")
+print("---")
 
 #x = h.heap() #depois do coigo
 #print('memoria: '+str(x.size))
