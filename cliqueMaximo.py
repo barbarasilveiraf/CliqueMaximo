@@ -3,6 +3,7 @@ import time
 from datetime import datetime
 from math import sqrt
 import sys
+import os
 #from guppy import hpy
 
 from networkx.algorithms.clique import find_cliques
@@ -25,24 +26,31 @@ def inicio():
     global Grafo
     global mediaGrauVertices
     global desvioPadrao
+    end = None
     #arq = open(str(sys.argv[0]), 'rb')
-    nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/1684.edges'
-    arq = open(nomeCaminhoArq, 'rb')
+    #nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/1684.edges'
 
+    #arq = open(nomeCaminhoArq, 'rb')
+    arq = open(str(sys.argv[1]), 'rb')
+
+    nomeArq = str(sys.argv[1])[42:end]
+
+    # print("1 Arquivo")
+    print(nomeArq)
+
+    # Leitura do arquivo
     G = nx.read_edgelist(arq)
 
     #para cada vertice, vou adicionar a aresta com vértice 0 - orientacao da base
-    end = None
-    nomeArq = nomeCaminhoArq[84:end].replace(".edges","")
+
+    nomeArqVertice = nomeArq.replace(".edges", "")
 
     vertices = [x for x in nx.nodes(G)]
     for n in vertices:
-        G.add_edge(nomeArq, n)
+        G.add_edge(nomeArqVertice, n)
 
     Grafo = G
 
-    print("Vertices incicio")
-    print(nx.number_of_nodes(Grafo))
     #Congela Grafo
     #nx.freeze(G)
 
@@ -62,6 +70,18 @@ def inicio():
     #calcular o desvio padrao
     desvioPadrao = desvio_padrao(mediaGrauVertices, grafosList)
 
+    # print("2 Vertice Orign")
+    print(nx.number_of_nodes(G))
+
+    # print("3 Arestas Orign")
+    print(nx.number_of_edges(G))
+
+    # print("4 media")
+    print(mediaGrauVertices)
+
+    # print("5 Densidade")
+    print("%.4f" % nx.density(G))
+
     #remove os elementos cujo grau menor que a media
     for n in vertices:
        if(G.degree[n] < mediaGrauVertices - desvioPadrao):
@@ -69,8 +89,14 @@ def inicio():
             grafosList.pop(v[0])
             Grafo.remove_node(n)
 
-    print("Vertices depois")
+    # print("6 Vertice Utiliz")
     print(nx.number_of_nodes(Grafo))
+
+    # print("7 Arestas Orign")
+    print(nx.number_of_edges(Grafo))
+
+    # print("8 Desvio Padrao")
+    print(desvioPadrao)
 
     return grafosList
 
@@ -92,19 +118,22 @@ def clique(S, tamanho, cliquesTemp):
         cliquesTemp.append(i)
         clique(list(set(S).intersection(set(list(Grafo.neighbors(i))))), tamanho+1, cliquesTemp)
 
-#h = hpy()
-#h.setrelheap()
+h = hpy()
+h.setrelheap()
 
-print("HORA ATUAL " + str(datetime.now().hour )+ ":" + str(datetime.now().minute) +":" + str(datetime.now().second))
+#print("HORA ATUAL " + str(datetime.now().hour )+ ":" + str(datetime.now().minute) +":" + str(datetime.now().second))
 tempoInicio = time.time()
 lista = [x[0] for x in inicio()]
 clique(lista, 0, [])
-print('CLIQUE MAX - ' + str(max))
+# print('9 CLIQUE MAX ')
+print(str(max))
 #print('Elementos MAX - ' + str(elementosClique))
 #cliques = list(find_cliques(Grafo))
 tempoFim = time.time()
-print("TEMPO -> " + "%.4f" % (tempoFim - tempoInicio))
+# print("10 Tempo")
+print("%.4f" % (tempoFim - tempoInicio))
 
-#x = h.heap() #depois do coigo
+x = h.heap() #depois do coigo
 #print('memoria: '+str(x.size))
-#print ('memoria'+ str(x))
+# print("11 Memoria")
+print(str(x.size))
