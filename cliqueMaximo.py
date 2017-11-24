@@ -79,14 +79,6 @@ def inicio():
     # print("5 Densidade")
     print("%.4f" % nx.density(G))
 
-    # print("6 Vertice Utiliz")
-    print(nx.number_of_nodes(G))
-
-    # print("7 Arestas Orign")
-    print(nx.number_of_edges(G))
-
-    # print("8 Desvio Padrao")
-    print(desvioPadrao)
 
     #remove os elementos cujo grau menor que a media
     for n in vertices:
@@ -94,6 +86,15 @@ def inicio():
             v = [x for x, y in enumerate(grafosList) if y[0] == n]
             grafosList.pop(v[0])
             Grafo.remove_node(n)
+
+    # print("6 Vertice Utiliz")
+    print(nx.number_of_nodes(Grafo))
+
+    # print("7 Arestas Orign")
+    print(nx.number_of_edges(Grafo))
+
+    # print("8 Desvio Padrao")
+    print(desvioPadrao)
 
     return grafosList
 
