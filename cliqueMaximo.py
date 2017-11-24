@@ -2,6 +2,8 @@ import networkx as nx
 import time
 from datetime import datetime
 from guppy import hpy
+import os
+import sys
 
 from networkx.algorithms.clique import find_cliques
 
@@ -13,13 +15,12 @@ def inicio():
     global Grafo
     end = None
     #nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/348.edges'
-    #arq = open('C:/Users/Barbara/PycharmProjects/TP_Final_PAA/facebook/1684.edges', 'rb')
     arq = open(str(sys.argv[1]), 'rb')
 
-    nomeCaminhoArq = str(sys.argv[1])
+    nomeArq = str(sys.argv[1])[47:]
 
     print("1 Arquivo")
-    print(nomeCaminhoArq[84:end])
+    print(nomeArq)
 
     #Leitura do arquivo
     G = nx.read_edgelist(arq)
@@ -27,11 +28,11 @@ def inicio():
     #para cada vértice, vou adicionar a aresta com vértice 0 - orientacao da base
 
 
-    nomeArq = nomeCaminhoArq[84:end].replace(".edges","")
+    verticeAddBaseFacbook = nomeArq.replace(".edges","")
 
     vertices = [x for x in nx.nodes(G)]
     for n in vertices:
-        G.add_edge(nomeArq, n)
+        G.add_edge(verticeAddBaseFacbook, n)
 
     print("2 Vertice Orign")
     print(nx.number_of_nodes(G))
