@@ -27,13 +27,14 @@ def inicio():
     global desvioPadrao
     end = None
     #arq = open(str(sys.argv[0]), 'rb')
-    #nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/348.edges'
-    #arq = open(nomeCaminhoArq, 'rb')
-    arq = open(str(sys.argv[1]), 'rb')
+    nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/348.edges'
+    arq = open(nomeCaminhoArq, 'rb')
+    #arq = open(str(sys.argv[1]), 'rb')
 
-    nomeArq = str(sys.argv[1])[42:end]
+    nomeArq = nomeCaminhoArq[106:end]
+    #nomeArq = str(sys.argv[1])[42:end]
 
-    # print("1 Arquivo")
+    print("1 Arquivo")
     print(nomeArq)
 
     # Leitura do arquivo
@@ -67,25 +68,25 @@ def inicio():
     #calcular o desvio padrao
     desvioPadrao = desvio_padrao(mediaGrauVertices, grafosList)
 
-    # print("2 Vertice Orign")
+    print("2 Vertice Orign")
     print(nx.number_of_nodes(G))
 
-    # print("3 Arestas Orign")
+    print("3 Arestas Orign")
     print(nx.number_of_edges(G))
 
-    # print("4 media")
+    print("4 media")
     print(mediaGrauVertices)
 
-    # print("5 Densidade")
+    print("5 Densidade")
     print("%.4f" % nx.density(G))
 
-    # print("6 Vertice Utiliz")
+    print("6 Vertice Utiliz")
     print(nx.number_of_nodes(G))
 
-    # print("7 Arestas Orign")
+    print("7 Arestas Orign")
     print(nx.number_of_edges(G))
 
-    # print("8 Desvio Padrao")
+    print("8 Desvio Padrao")
     print(desvioPadrao)
 
     #remove os elementos cujo grau menor que a media
@@ -116,27 +117,27 @@ def clique(S, tamanho, cliquesTemp):
         cliquesTemp.append(i)
         #if(Grafo.degree(i) < mediaGrauVertices):   return #nao funcionou... :(
 
-        if (Grafo.degree(i) >= mediaGrauVertices):
+        #if (Grafo.degree(i) >= mediaGrauVertices):
              #pra ignorar os viznhos cujo grau e menor q a media
-            vizinhosVertices = [x for x in Grafo.neighbors(i) if Grafo.degree[x] >= mediaGrauVertices]
-            clique(list(set(S).intersection(set(list(vizinhosVertices)))), tamanho+1, cliquesTemp)
+        vizinhosVertices = [x for x in Grafo.neighbors(i) if Grafo.degree[x] >= mediaGrauVertices]
+        clique(list(set(S).intersection(set(list(vizinhosVertices)))), tamanho+1, cliquesTemp)
 
-h = hpy()
-h.setrelheap()
+#h = hpy()
+#h.setrelheap()
 
 #print("HORA ATUAL " + str(datetime.now().hour )+ ":" + str(datetime.now().minute) +":" + str(datetime.now().second))
 tempoInicio = time.time()
 lista = [x[0] for x in inicio()]
 clique(lista, 0, [])
-# print('9 CLIQUE MAX ')
+print('9 CLIQUE MAX ')
 print(str(max))
 #print('Elementos MAX - ' + str(elementosClique))
 #cliques = list(find_cliques(Grafo))
 tempoFim = time.time()
-# print("10 Tempo")
+print("10 Tempo")
 print("%.4f" % (tempoFim - tempoInicio))
 
-x = h.heap()  # depois do coigo
+#x = h.heap()  # depois do coigo
 
 # print("11 Memoria")
-print(str(x.size))
+#print(str(x.size))
