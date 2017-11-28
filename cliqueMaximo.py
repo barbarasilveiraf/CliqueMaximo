@@ -17,7 +17,7 @@ def inicio():
     global vizinhos
     end = None
 
-    #nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/1684.edges'
+    #nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/107.edges'
     nomeCaminhoArq = str(sys.argv[1])
     resultados = re.findall(r'\d+', nomeCaminhoArq)
     verticeAddBaseFacbook  = resultados[-1]
@@ -69,6 +69,7 @@ def inicio():
     #ordenação crescente pelo grau, depois pelo id do vertice
     grafosList.sort(key=itemgetter(1,0))
 
+
     vizinhosOrdenados = {}
     for node in grafosList:
         vizinhosVertice = list(Grafo.neighbors(node[0])) #vizinhos do vertice corrente
@@ -91,9 +92,11 @@ def clique(S, tamanho, cliquesTemp):
             elementosClique = cliquesTemp[-max:]; #pego os max elementos para tras, pois eles fazem parte do meu clique
         return
     while(len(S) != 0):
-        if((tamanho + len(S)) <= max):
+        if((tamanho + len(S)) <= max*1.3):
             return
         i = S[0]
+        #print("iiiiiiiiiii")
+        #print(i)
         S.remove(i)
         cliquesTemp.append(i);
         clique(list(set(S).intersection(set(list(vizinhos[i])))), tamanho + 1, cliquesTemp)
