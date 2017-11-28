@@ -3,7 +3,7 @@ import time
 from math import sqrt
 import sys
 import os
-#from guppy import hpy
+from guppy import hpy
 import re
 from operator import itemgetter
 
@@ -35,7 +35,6 @@ def inicio():
     #nomeCaminhoArq = str(sys.argv[1])
     resultados = re.findall(r'\d+', nomeCaminhoArq)
     verticeAddBaseFacbook  = resultados[-1]
-
 
     arq = open(nomeCaminhoArq, 'rb')
 
@@ -88,7 +87,7 @@ def inicio():
     print(nx.number_of_edges(G))
 
     # print("4 media")
-    print(mediaGrauVertices)
+    print("%.4f" % mediaGrauVertices)
 
     # print("5 Densidade")
     print("%.4f" % nx.density(G))
@@ -108,7 +107,7 @@ def inicio():
     print(nx.number_of_edges(Grafo))
 
     # print("8 Desvio Padrao")
-    print(desvioPadrao)
+    print("%.4f" % desvioPadrao)
 
     return grafosList
 
@@ -130,8 +129,8 @@ def clique(S, tamanho, cliquesTemp):
         cliquesTemp.append(i);
         clique(list(set(S).intersection(set(list(Grafo.neighbors(i))))), tamanho+1, cliquesTemp)
 
-#h = hpy()
-#h.setrelheap()
+h = hpy()
+h.setrelheap()
 
 #print("HORA ATUAL " + str(datetime.now().hour )+ ":" + str(datetime.now().minute) +":" + str(datetime.now().second))
 tempoInicio = time.time()
@@ -145,7 +144,7 @@ tempoFim = time.time()
 # print("10 Tempo")
 print("%.4f" % (tempoFim - tempoInicio))
 
-#x = h.heap() #depois do coigo
+x = h.heap() #depois do coigo
 
 # print("11 Memoria")
-#print(str(x.size))
+print(str(x.size))
