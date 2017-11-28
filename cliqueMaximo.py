@@ -1,7 +1,7 @@
 import networkx as nx
 import time
 from datetime import datetime
-#from guppy import hpy
+from guppy import hpy
 import os
 import sys
 import re
@@ -85,6 +85,7 @@ def clique(S, tamanho, cliquesTemp):
     global Grafo
     global max
     global elementosClique
+    global vizinhos
 
     if(len(S) == 0):
         if(tamanho > max):
@@ -101,8 +102,8 @@ def clique(S, tamanho, cliquesTemp):
         cliquesTemp.append(i);
         clique(list(set(S).intersection(set(list(vizinhos[i])))), tamanho + 1, cliquesTemp)
 
-#h = hpy()
-#h.setrelheap()
+h = hpy()
+h.setrelheap()
 
 tempoInicio = time.time()
 lista = [x[0] for x in inicio()]
@@ -117,11 +118,10 @@ tempoFim = time.time()
 print("10 Tempo")
 print("%.4f" % (tempoFim - tempoInicio))
 
-#x = h.heap() #depois do coigo
-#print('memoria: '+str(x.size))
+x = h.heap() #depois do coigo
 
 #print("11 Memoria")
-#print(str(x.size))
+print(str(x.size))
 
 #print ('memoria'+ str(x))
 
