@@ -1,18 +1,19 @@
 import networkx as nx
 import time
-from datetime import datetime
 from math import sqrt
 import sys
 import os
-#from guppy import hpy
+from guppy import hpy
+import re
+from operator import itemgetter
 
-from networkx.algorithms.clique import find_cliques
 
 Grafo = nx.Graph
 max = 0
 elementosClique = []
 mediaGrauVertices = 0
 desvioPadrao = 0
+vizinhos = {}
 
 def desvio_padrao(m, g):
     diffMedia = 0
@@ -26,28 +27,28 @@ def inicio():
     global Grafo
     global mediaGrauVertices
     global desvioPadrao
+    global vizinhos
+
     end = None
-    #arq = open(str(sys.argv[0]), 'rb')
-    #nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/1684.edges'
 
-    #arq = open(nomeCaminhoArq, 'rb')
-    arq = open(str(sys.argv[1]), 'rb')
+    #nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/414.edges'
+    nomeCaminhoArq = str(sys.argv[1])
+    resultados = re.findall(r'\d+', nomeCaminhoArq)
+    verticeAddBaseFacbook  = resultados[-1]
 
-    nomeArq = str(sys.argv[1])[42:end]
+    arq = open(nomeCaminhoArq, 'rb')
 
     # print("1 Arquivo")
-    print(nomeArq)
+    print(verticeAddBaseFacbook+".edges")
 
     # Leitura do arquivo
     G = nx.read_edgelist(arq)
 
     #para cada vertice, vou adicionar a aresta com vértice 0 - orientacao da base
 
-    nomeArqVertice = nomeArq.replace(".edges", "")
-
     vertices = [x for x in nx.nodes(G)]
     for n in vertices:
-        G.add_edge(nomeArqVertice, n)
+        G.add_edge(verticeAddBaseFacbook, n)
 
     Grafo = G
 
@@ -57,13 +58,22 @@ def inicio():
     #Lista de tuplas(vertice, grau)
     grafosList = list(G.degree)
 
-    #ordenacao crescente pelo grau
-    grafosList.sort(key=lambda tup: tup[1])
+    #ordenação crescente pelo grau, depois pelo id do vertice
+    grafosList.sort(key=itemgetter(1,0))
+
+    vizinhosOrdenados = {}
+    for node in grafosList:
+        vizinhosVertice = list(Grafo.neighbors(node[0])) #vizinhos do vertice corrente
+        vizinhosPeloGrau = [x for x in Grafo.degree if x[0] in vizinhosVertice] #viznhos encontrados com o grau, pra poder ordenar
+        vizinhosPeloGrau.sort(key=itemgetter(1, 0)) #odena pelo grau e depois pelo ID
+        vizinhosOrdenados[node[0]] = [x[0] for x in vizinhosPeloGrau] #adicona no map
+
+    vizinhos = vizinhosOrdenados
 
     #pra pegar os vertices ja ordenados pelo grau
     vertices = [x[0] for x in grafosList]
 
-    for n in vertices[:-1]: #pra ignorar o valor mais alto...
+    for n in vertices[:-1]: # -1 pra ignorar o valor mais alto...
         mediaGrauVertices += G.degree[n]
     mediaGrauVertices /= (nx.number_of_nodes(G)-1)
 
@@ -77,14 +87,14 @@ def inicio():
     print(nx.number_of_edges(G))
 
     # print("4 media")
-    print(mediaGrauVertices)
+    print("%.4f" % mediaGrauVertices)
 
     # print("5 Densidade")
     print("%.4f" % nx.density(G))
 
     #remove os elementos cujo grau menor que a media
     for n in vertices:
-       if(G.degree[n] < mediaGrauVertices - desvioPadrao):
+        if (G.degree[n] < mediaGrauVertices - desvioPadrao):
             v = [x for x, y in enumerate(grafosList) if y[0] == n]
             grafosList.pop(v[0])
             Grafo.remove_node(n)
@@ -96,7 +106,7 @@ def inicio():
     print(nx.number_of_edges(Grafo))
 
     # print("8 Desvio Padrao")
-    print(desvioPadrao)
+    print("%.4f" % desvioPadrao)
 
     return grafosList
 
@@ -115,8 +125,8 @@ def clique(S, tamanho, cliquesTemp):
             return
         i = S[0]
         S.remove(i)
-        cliquesTemp.append(i)
-        clique(list(set(S).intersection(set(list(Grafo.neighbors(i))))), tamanho+1, cliquesTemp)
+        cliquesTemp.append(i);
+        clique(list(set(S).intersection(set(list(vizinhos[i])))), tamanho+1, cliquesTemp)
 
 h = hpy()
 h.setrelheap()
@@ -134,6 +144,6 @@ tempoFim = time.time()
 print("%.4f" % (tempoFim - tempoInicio))
 
 x = h.heap() #depois do coigo
-#print('memoria: '+str(x.size))
+
 # print("11 Memoria")
-print(str(x.size))
+#print(str(x.size))
