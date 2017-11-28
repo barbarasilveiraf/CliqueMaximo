@@ -89,7 +89,8 @@ def clique(S, tamanho, cliquesTemp):
     global Grafo
     global max
     global elementosClique
-
+    global vizinhos
+    
     if (len(S) == 0):
         if (tamanho > max):
             max = tamanho
