@@ -31,8 +31,8 @@ def inicio():
 
     end = None
 
-    nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/414.edges'
-    #nomeCaminhoArq = str(sys.argv[1])
+    #nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/414.edges'
+    nomeCaminhoArq = str(sys.argv[1])
     resultados = re.findall(r'\d+', nomeCaminhoArq)
     verticeAddBaseFacbook  = resultados[-1]
 
@@ -115,6 +115,7 @@ def clique(S, tamanho, cliquesTemp):
     global Grafo
     global max
     global elementosClique
+    global vizinhos
 
     if(len(S) == 0):
         if(tamanho > max):
@@ -127,7 +128,7 @@ def clique(S, tamanho, cliquesTemp):
         i = S[0]
         S.remove(i)
         cliquesTemp.append(i);
-        clique(list(set(S).intersection(set(list(Grafo.neighbors(i))))), tamanho+1, cliquesTemp)
+        clique(list(set(S).intersection(set(list(vizinhos[i])))), tamanho+1, cliquesTemp)
 
 h = hpy()
 h.setrelheap()
