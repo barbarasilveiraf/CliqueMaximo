@@ -17,7 +17,7 @@ def inicio():
     global vizinhos
     end = None
 
-    #nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/107.edges'
+    #nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/414.edges'
     nomeCaminhoArq = str(sys.argv[1])
     resultados = re.findall(r'\d+', nomeCaminhoArq)
     verticeAddBaseFacbook  = resultados[-1]
