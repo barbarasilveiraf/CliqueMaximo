@@ -146,4 +146,4 @@ print("%.4f" % (tempoFim - tempoInicio))
 x = h.heap() #depois do coigo
 
 # print("11 Memoria")
-#print(str(x.size))
+print(str(x.size))
