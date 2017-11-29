@@ -31,7 +31,7 @@ def inicio():
 
     end = None
 
-    #nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/414.edges'
+    #nomeCaminhoArq = 'C:/Users/Barbara/Dropbox/UFMG/PAA/Projeto Final/Entrega 2/testes preliminares/bases/0.edges'
     nomeCaminhoArq = str(sys.argv[1])
     resultados = re.findall(r'\d+', nomeCaminhoArq)
     verticeAddBaseFacbook  = resultados[-1]
@@ -44,7 +44,7 @@ def inicio():
     # Leitura do arquivo
     G = nx.read_edgelist(arq)
 
-    #para cada vertice, vou adicionar a aresta com vértice 0 - orientacao da base
+    #para cada vertice, vou adicionar a aresta com vetice 0 - orientacao da base
 
     vertices = [x for x in nx.nodes(G)]
     for n in vertices:
@@ -58,7 +58,7 @@ def inicio():
     #Lista de tuplas(vertice, grau)
     grafosList = list(G.degree)
 
-    #ordenação crescente pelo grau, depois pelo id do vertice
+    #ordenacao crescente pelo grau, depois pelo id do vertice
     grafosList.sort(key=itemgetter(1,0))
 
     vizinhosOrdenados = {}
@@ -75,7 +75,7 @@ def inicio():
 
     for n in vertices[:-1]: # -1 pra ignorar o valor mais alto...
         mediaGrauVertices += G.degree[n]
-    mediaGrauVertices /= (nx.number_of_nodes(G)-1)
+    mediaGrauVertices /= ((nx.number_of_nodes(G)-1)*1.0)
 
     #calcular o desvio padrao
     desvioPadrao = desvio_padrao(mediaGrauVertices, grafosList)
@@ -86,10 +86,10 @@ def inicio():
     # print("3 Arestas Orign")
     print(nx.number_of_edges(G))
 
-    # print("4 media")
+    #print("4 media")
     print("%.4f" % mediaGrauVertices)
 
-    # print("5 Densidade")
+    #print("5 Densidade")
     print("%.4f" % nx.density(G))
 
 
@@ -100,10 +100,10 @@ def inicio():
             grafosList.pop(v[0])
             Grafo.remove_node(n)
 
-    # print("6 Vertice Utiliz")
+    #print("6 Vertice Utiliz")
     print(nx.number_of_nodes(Grafo))
 
-    # print("7 Arestas Orign")
+    #print("7 Arestas Orign")
     print(nx.number_of_edges(Grafo))
 
     # print("8 Desvio Padrao")
