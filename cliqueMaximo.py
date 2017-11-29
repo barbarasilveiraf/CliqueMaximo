@@ -123,7 +123,7 @@ def clique(S, tamanho, cliquesTemp):
             elementosClique = cliquesTemp[-max:]; #pego os max elementos para tras, pois eles fazem parte do meu clique
         return
     while(len(S) != 0):
-        if(tamanho + len(S) <= max):
+        if(tamanho + len(S) <= max*1.3):
             return
         i = S[0]
         S.remove(i)
