@@ -25,37 +25,37 @@ def inicio():
     #arq = open(str(sys.argv[1]), 'rb')
     arq = open(nomeCaminhoArq, 'rb')
 
-    print("1 Arquivo")
+    #print("1 Arquivo")
     print(verticeAddBaseFacbook+".edges")
 
     #Leitura do arquivo
     G = nx.read_edgelist(arq)
 
-    #para cada vértice, vou adicionar a aresta com vértice 0 - orientacao da base
+    #para cada vertice, vou adicionar a aresta com vertice 0 - orientacao da base
 
     vertices = [x for x in nx.nodes(G)]
     for n in vertices:
         G.add_edge(verticeAddBaseFacbook, n)
 
-    print("2 Vertice Orign")
+    #print("2 Vertice Orign")
     print(nx.number_of_nodes(G))
 
-    print("3 Arestas Orign")
+    #print("3 Arestas Orign")
     print(nx.number_of_edges(G))
 
-    print("4 media")
+    #print("4 media")
     print("0.00")
 
-    print("5 Densidade")
+    #print("5 Densidade")
     print("%.4f" % nx.density(G))
 
-    print("6 Vertice Utiliz")
+    #print("6 Vertice Utiliz")
     print(nx.number_of_nodes(G))
 
-    print("7 Arestas Orign")
+    #print("7 Arestas Orign")
     print(nx.number_of_edges(G))
 
-    print("8 Desvio Padrao")
+    #print("8 Desvio Padrao")
     print("0.00")
 
     #Congela Grafo
@@ -66,9 +66,8 @@ def inicio():
     #Lista de tuplas(vertice, grau)
     grafosList = list(G.degree)
 
-    #ordenação crescente pelo grau, depois pelo id do vertice
+    #ordenacao crescente pelo grau, depois pelo id do vertice
     grafosList.sort(key=itemgetter(1,0))
-
 
     vizinhosOrdenados = {}
     for node in grafosList:
@@ -108,14 +107,14 @@ h.setrelheap()
 tempoInicio = time.time()
 lista = [x[0] for x in inicio()]
 clique(lista, 0, [])
-print('9 CLIQUE MAX ')
+#print('9 CLIQUE MAX ')
 print(str(max))
 #print('Elementos MAX - ' + str(elementosClique))
 #cliques = list(find_cliques(Grafo))
 #l = [len(x) for x in cliques]
 #print('Outro: ' + str(sorted(l)[-1:]))
 tempoFim = time.time()
-print("10 Tempo")
+#print("10 Tempo")
 print("%.4f" % (tempoFim - tempoInicio))
 
 x = h.heap() #depois do coigo
